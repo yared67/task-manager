@@ -18,7 +18,7 @@ const ListHeader = ({ listName,getData }) => {
     <div className="bg-gray-800 p-4 rounded-md shadow-md w-full flex justify-between items-center border-b border-gray-700">
       <h1 className="text-white text-2xl ">{listName}</h1>
       <div className="flex items-center">
-        <button className="mx-1 text-xs px-4 py-2 rounded-lg bg-transparent border border-gray-400 text-white hover:bg-gray-700" onClick={() => setShowModal(true)}>
+        <button className="mx-1 text-xs px-4 py-2 rounded-lg bg-transparent border border-gray-400 text-white hover:bg-green-700" onClick={() => setShowModal(true)}>
           ADD NEW </button>
         <button
           className="mx-1 text-xs  px-4 py-2 rounded-lg bg-transparent border border-gray-400 text-white hover:bg-red-700"

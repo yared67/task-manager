@@ -10,7 +10,7 @@ const App = () => {
   const userEmail = cookies.Email
   const[ tasks, setTasks] = useState(null)
 
-
+ 
   const getData = async () => {
     try {
       const response = await fetch (`http://localhost:4000/todos/${userEmail}`)
@@ -30,7 +30,8 @@ const App = () => {
 
   //sort by date 
 
-  const sortedTasks = tasks?.sort((a,b) => new Date (a.date) - new Date(b.date))
+  const sortedTasks = tasks?.length > 0 ? tasks.sort((a, b) => new Date(a.date) - new Date(b.date)) : [];
+
 
 
   return (

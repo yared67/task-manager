@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { useCookies} from 'react-cookie'
+import { useCookies } from 'react-cookie'
 
 const Modal = ({ mode, setShowModal, getData, task }) => {
-  const [cookies,setCookie, removeCookie] = useCookies(null)
+  const [cookies, setCookie, removeCookie] = useCookies(null)
   const editMode = mode === 'edit'
 
   const [data, setData] = useState({
     user_email: editMode ? task.user_email : cookies.Email,
-    title: editMode ? task.title : null,
+    title: editMode ? task.title : '',
     progress: editMode ? task.progress : 50,
     date: editMode ? task.date : new Date()
   })
@@ -33,18 +33,15 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     e.preventDefault()
 
     try {
-      const response = await fetch(`http://localhost:4000/${task.id}`, {
+      const response = await fetch(`http://localhost:4000/todos/${task.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
-      if (response.status ===200){
-
+      if (response.status === 200) {
         setShowModal(false)
-      getData()
+        getData()
       }
-     
-      
     } catch (err) {
       console.error(err)
     }
@@ -72,7 +69,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
       <div className="w-1/2 p-[40px] bg-white shadow-custom rounded-md">
         <div className="flex space-x-40">
           <h3 className="bold-font border-none bg-transparent">Let's {mode} your task</h3>
-          <button className="border-none bg-transparent hover:bg-red-700" onClick={() => setShowModal(false)}>x</button>
+          <button className="border-none bg-transparent hover:bg-red-700 float-right sm:float-none sm:ml-auto sm:text-lg md:text-xl lg:text-2xl" onClick={() => setShowModal(false)}>x</button>
         </div>
 
         <form className="flex flex-col" onSubmit={handleSubmit}>
@@ -82,7 +79,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             maxLength={30}
             placeholder="new task goes here"
             name="title"
-            value={data.title}
+            value={data.title || ''}
             onChange={handleChange}
           />
           <br />
@@ -100,7 +97,6 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
           <input
             className="px-2 py-1 text-xs rounded-lg bg-transparent border border-gray-400 hover:bg-green-700"
             type="submit"
-            value={editMode ? 'Update Task' : 'Add Task'}
           />
         </form>
       </div>

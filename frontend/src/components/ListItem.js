@@ -15,7 +15,7 @@ const ListItem = ({ task, getData}) => {
             method: 'DELETE',
         });
         if (response.status === 200) {
-          getData(); // Call the getdata function to update the state in the parent component
+          getData(); 
         
         }
     } catch (err) {
@@ -26,9 +26,9 @@ const ListItem = ({ task, getData}) => {
   return (
     <li className="w-full my-2.5 flex rounded-lg shadow justify-between">
       <div className="flex items-center">
-        <TickIcon />
+      <TickIcon />
         <p className="text-xl ">{task.title}</p>
-        <ProgressBar task={task} />
+        <ProgressBar progress = {task.progress} task={task} />
       </div> 
       <div className="flex">
         <button
