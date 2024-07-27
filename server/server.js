@@ -3,13 +3,21 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 const cors = require('cors');
-const pool = require('./db');
+const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-app.use(cors( {orgin: ['htttp://localhost:3000','https://task-manager-taupe-seven.vercel.app/'],
-    credentials: true}
-));
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  
+  
+});
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://task-manager-taupe-seven.vercel.app'],
+  credentials: true,
+}));
 app.use(express.json());
 
 // Get all todos
@@ -75,7 +83,7 @@ app.post('/signup', async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const signUp = await pool.query('INSERT INTO users(email, hashed_password) VALUES($1, $2) RETURNING *', [email, hashedPassword]);
-    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1hr' });
     res.status(201).json({ email, token });
   } catch (err) {
     console.error('Error signing up:', err);
@@ -92,7 +100,7 @@ app.post('/login', async (req, res) => {
       return res.status(404).json({ detail: 'User does not exist' });
     }
     const success = await bcrypt.compare(password, users.rows[0].hashed_password);
-    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1hr' });
 
     if (success) {
       res.json({ email: users.rows[0].email, token });
