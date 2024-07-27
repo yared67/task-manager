@@ -7,7 +7,9 @@ const pool = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-app.use(cors());
+app.use(cors( {orgin: ['htttp://localhost:3000','https://task-manager-taupe-seven.vercel.app/'],
+    credentials: true}
+));
 app.use(express.json());
 
 // Get all todos
