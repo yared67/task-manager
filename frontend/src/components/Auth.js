@@ -23,7 +23,7 @@ const Auth = () => {
       return;
     }
 
-    const response = await fetch(`http://localhost:8000/${endpoint}`, {
+    const response = await fetch(`https://task-manager-ej4g.onrender.com/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),

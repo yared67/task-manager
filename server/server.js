@@ -9,7 +9,10 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.use(cors());
+
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://task-manager-taupe-seven.vercel.app'] 
+}));
 app.use(express.json());
 
 // Status endpoint
