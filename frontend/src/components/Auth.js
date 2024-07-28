@@ -23,7 +23,7 @@ const Auth = () => {
       return;
     }
 
-    const response = await fetch(`${process.env.REACT_APP_SERVERURL}/${endpoint}`, {
+    const response = await fetch(`http://localhost:8000/${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -53,7 +53,6 @@ const Auth = () => {
             type="email"
             placeholder="Email"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-            
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -61,7 +60,6 @@ const Auth = () => {
             type="password"
             placeholder="Password"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-         
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -70,16 +68,14 @@ const Auth = () => {
               type="password"
               placeholder="Confirm Password"
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-green-500"
-            
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           } 
 
           <input
-          
-          type="submit"  className="w-full py-3 text-white bg-green-500 rounded-lg cursor-pointer hover:bg-green-600" onClick={(e) => handleSubmit(e, isLogIn ? 'login' : 'signup')}
-           
+            type="submit"
+            className="w-full py-3 text-white bg-green-500 rounded-lg cursor-pointer hover:bg-green-600"
           />
           
           {error && <p className="text-red-500">{error}</p>}
