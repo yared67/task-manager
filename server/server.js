@@ -7,8 +7,15 @@ const pool = require('./db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 app.use(cors());
 app.use(express.json());
+
+// Status endpoint
+app.get('/status', (req, res) => {
+  res.status(200).send('Server is running');
+});
 
 // Get all todos
 app.get('/todos/:userEmail', async (req, res) => {
@@ -73,7 +80,7 @@ app.post('/signup', async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, salt);
   try {
     const signUp = await pool.query('INSERT INTO users(email, hashed_password) VALUES($1, $2) RETURNING *', [email, hashedPassword]);
-    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1hr' });
     res.status(201).json({ email, token });
   } catch (err) {
     console.error('Error signing up:', err);
@@ -90,7 +97,7 @@ app.post('/login', async (req, res) => {
       return res.status(404).json({ detail: 'User does not exist' });
     }
     const success = await bcrypt.compare(password, users.rows[0].hashed_password);
-    const token = jwt.sign({ email }, 'secret', { expiresIn: '1hr' });
+    const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1hr' });
 
     if (success) {
       res.json({ email: users.rows[0].email, token });
