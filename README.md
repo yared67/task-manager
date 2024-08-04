@@ -60,8 +60,8 @@ Click on the "SIGN OUT" button to leave the dashboard.
 ## Deployment
 ### Deploying to Render
 
-1. Log in to your Render account and create a new Web Service for your backend:
-   -Connect your repository.
+1. Log in to Render account and create a new Web Service for backend:
+   -Connect repository.
    -Set the build and start command
 
  ```
@@ -71,14 +71,14 @@ Click on the "SIGN OUT" button to leave the dashboard.
    - Set environment variables in the Render dashboard.
 2. Deploy your frontend to Vercel:
 
-    -Log in to your Vercel account and create a new project.
-    -Select your repository and configure the project settings.
+    -Log in to Vercel account and create a new project.
+    -Select repository and configure the project settings.
     -set the build and output settings
      ```
      Build Command: npm run build
      Output Directory: build
      ```
-3. Ensure that your frontend is configured to make API requests to your Render backend URL.
+3. Ensure that your frontend is configured to make API requests to Render backend URL.
   ## Contributing
 Contributions are welcome! Please follow these steps:
 
