@@ -94,7 +94,7 @@ git commit -m 'Add your feature'
 4. push to branch:
 ```
 git push origin feature
-``
+```
  ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
