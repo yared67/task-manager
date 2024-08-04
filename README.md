@@ -3,8 +3,6 @@
 A task management application built with React for the frontend and Node.js with Express for the backend, using PostgreSQL as the database. The project is organized with separate directories for the server and frontend code.
 
 ## Table of Contents
-
-- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
@@ -12,32 +10,7 @@ A task management application built with React for the frontend and Node.js with
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
-
-## Project Structure
-
-The project directory is organized as follows:
-TASK_MANAGEMENT_APP/
-├── server/
-│ ├── db.js
-│ ├── server.js
-│ ├── package.json
-│ └── package-lock.json
-└── frontend/
-│ ├── src/
-│ │   ├── components/
-│ │   ├── ListHeader.js
-│ │   ├── ListItem.js
-│ │   ├── Auth.js
-│ │   ├── Modal.js
-│ │   ├── ProgressBar.js
-│ │   └── TickIcon.js
-│ ├── App.js
-│ ├── index.js
-│ └── index.css
-├── public/
-├── package.json
-
-
+  
 ## Installation
 
 ### Backend Setup
@@ -90,11 +63,12 @@ Click on the "SIGN OUT" button to leave the dashboard.
 1. Log in to your Render account and create a new Web Service for your backend:
    -Connect your repository.
    -Set the build and start command
-   ```
+
+ ```
    Build Command: npm install
    Start Command: npm start
   ```
-- Set environment variables in the Render dashboard.
+   - Set environment variables in the Render dashboard.
 2. Deploy your frontend to Vercel:
 
     -Log in to your Vercel account and create a new project.
