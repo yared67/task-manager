@@ -20,13 +20,13 @@ const ListItem = ({ task, getData }) => {
   };
 
   return (
-    <li className="w-full my-2.5 flex rounded-lg shadow justify-between">
-      <div className="flex items-center">
+    <li className="w-full my-2.5 flex rounded-lg shadow justify-between items-center">
+      <div className="flex items-center space-x-2">
         <TickIcon />
         <p className="text-xl">{task.title}</p>
         <ProgressBar progress={task.progress} task={task} />
       </div>
-      <div className="flex">
+      <div className="flex space-x-2">
         <button
           className="px-2 py-1 text-xs rounded-lg bg-transparent border border-gray-400 hover:bg-green-700"
           onClick={() => setShowModal(true)}

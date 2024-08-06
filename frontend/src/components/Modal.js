@@ -9,7 +9,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     user_email: editMode ? task.user_email : cookies.Email,
     title: editMode ? task.title : '',
     progress: editMode ? task.progress : 50,
-    date: editMode ? task.date : new Date()
+    date: editMode ? task.date : new Date(),
   });
 
   const postData = async (e) => {
@@ -17,11 +17,10 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
 
     try {
       const response = await fetch(`https://task-manager-ej4g.onrender.com/todos`, {
-        method: "POST",
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
-      console.log(response);
       setShowModal(false);
       getData();
     } catch (err) {
@@ -36,7 +35,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
       const response = await fetch(`https://task-manager-ej4g.onrender.com/todos/${task.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
       if (response.status === 200) {
         setShowModal(false);
@@ -45,14 +44,6 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
   };
 
   const handleSubmit = (e) => {
@@ -64,22 +55,29 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
-    <div className="absolute left-0 top-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="w-1/2 p-[40px] bg-white shadow-custom rounded-md">
-        <div className="flex space-x-40">
-          <h3 className="bold-font border-none bg-transparent">Let's {mode} your task</h3>
-          <button 
-            className="border-none bg-transparent hover:bg-red-700 float-right sm:float-none sm:ml-auto sm:text-lg md:text-xl lg:text-2xl"
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start py-8">
+      <div className="w-11/12 sm:w-3/4 lg:w-1/2 p-4 bg-white shadow-custom rounded-md">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-bold">{`Let's ${mode} your task`}</h3>
+          <button
+            className="text-lg font-bold text-red-700"
             onClick={() => setShowModal(false)}
           >
             x
           </button>
         </div>
-
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form className="mt-4" onSubmit={handleSubmit}>
           <input
-            className="py-3 px-4 my-3 rounded-lg border border-solid border-green-400"
+            className="w-full py-2 px-3 my-2 border rounded-lg"
             required
             maxLength={30}
             placeholder="new task goes here"
@@ -87,9 +85,9 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             value={data.title || ''}
             onChange={handleChange}
           />
-          <br />
           <label htmlFor="range">Drag to select your current progress</label>
           <input
+            className="w-full my-2"
             required
             type="range"
             id="range"
@@ -99,10 +97,12 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             value={data.progress}
             onChange={handleChange}
           />
-          <input
-            className="px-2 py-1 text-xs rounded-lg bg-transparent border border-gray-400 hover:bg-green-700"
+          <button
+            className="w-full py-2 mt-4 rounded-lg bg-green-700 text-white hover:bg-green-800"
             type="submit"
-          />
+          >
+            {mode === 'edit' ? 'Edit' : 'Add'} Task
+          </button>
         </form>
       </div>
     </div>
