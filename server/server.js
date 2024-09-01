@@ -9,9 +9,9 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-
+// Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://task-manager-taupe-seven.vercel.app'] 
+  origin: ['http://localhost:3000', 'https://task-manager-taupe-seven.vercel.app']
 }));
 app.use(express.json());
 
@@ -34,11 +34,12 @@ app.get('/todos/:userEmail', async (req, res) => {
 
 // Create a new todo
 app.post('/todos', async (req, res) => {
-  const { user_email, title, progress, date } = req.body;
+  const { user_email, title, progress, date } = req.body; 
+
   const id = uuidv4();
   try {
     const newToDo = await pool.query(
-      'INSERT INTO todos(id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5) RETURNING *',
+      'INSERT INTO todos(id, user_email, title, progress, date) VALUES($1, $2, $3, $4, $5) RETURNING *',  
       [id, user_email, title, progress, date]
     );
     res.status(201).json(newToDo.rows[0]);
@@ -51,13 +52,13 @@ app.post('/todos', async (req, res) => {
 // Edit a todo
 app.put('/todos/:id', async (req, res) => {
   const { id } = req.params;
-  const { user_email, title, progress, date } = req.body;
+  const { user_email, title, progress, date } = req.body;  
   try {
     const editToDo = await pool.query(
-      'UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5 RETURNING *',
+      'UPDATE todos SET user_email = $1, title = $2, progress = $3, date = $4 WHERE id = $5 RETURNING *',  
       [user_email, title, progress, date, id]
     );
-    res.json(editToDo.rows[0]);
+    res.json(editToDo);
   } catch (err) {
     console.error('Error editing todo:', err);
     res.status(500).json({ error: 'Server error' });
@@ -69,7 +70,7 @@ app.delete('/todos/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const deleteToDo = await pool.query('DELETE FROM todos WHERE id = $1 RETURNING *', [id]);
-    res.json(deleteToDo.rows[0]);
+    res.json(deleteToDo);
   } catch (err) {
     console.error('Error deleting todo:', err);
     res.status(500).json({ error: 'Server error' });
@@ -101,7 +102,6 @@ app.post('/login', async (req, res) => {
     }
     const success = await bcrypt.compare(password, users.rows[0].hashed_password);
     const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1hr' });
-
     if (success) {
       res.json({ email: users.rows[0].email, token });
     } else {
