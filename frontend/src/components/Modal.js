@@ -20,7 +20,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-     
+      console.log(response);
       setShowModal(false);
       getData();
     } catch (err) {
@@ -79,7 +79,7 @@ const Modal = ({ mode, setShowModal, getData, task }) => {
             maxLength={30}
             placeholder="New task goes here"
             name="title"
-            value={data.title || ''}
+            value={data.title }
             onChange={handleChange}
           />
           <label htmlFor="range" className="mt-4">Drag to select your current progress</label>
