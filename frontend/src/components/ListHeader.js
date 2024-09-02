@@ -3,7 +3,7 @@ import Modal from './Modal';
 import { useCookies } from 'react-cookie';
 
 const ListHeader = ({ listName, getData }) => {
-  const [removeCookie] = useCookies(null);
+  const [cookies, setCookie, removeCookie] = useCookies(['Email', 'AuthToken']);
   const [showModal, setShowModal] = useState(false);
 
   const signOut = () => {
